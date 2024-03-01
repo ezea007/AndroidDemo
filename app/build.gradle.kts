@@ -54,3 +54,17 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.6.0")
     implementation("androidx.navigation:navigation-ui-ktx:2.6.0")
 }
+
+project.beforeEvaluate {
+    println("---project：beforeEvaluate Project开始评估，对象是 = " + project.name)
+}
+project.afterEvaluate {
+    println("---project：afterEvaluate Project评估完毕，对象是 = " + project.name)
+}
+
+if (hasProperty("isTest")){
+    println("---hasProperty isTest yes")
+}else {
+    println("---hasProperty isTest no")
+}
+project.property("isTest")
