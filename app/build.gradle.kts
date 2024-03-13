@@ -21,7 +21,10 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -35,7 +38,6 @@ android {
         enable = true
     }
 }
-
 
 dependencies {
 
@@ -61,10 +63,19 @@ project.beforeEvaluate {
 project.afterEvaluate {
     println("---project：afterEvaluate Project评估完毕，对象是 = " + project.name)
 }
-
-if (hasProperty("isTest")){
-    println("---hasProperty isTest yes")
-}else {
-    println("---hasProperty isTest no")
+configurations.all {
+    resolutionStrategy {
+//        failOnVersionConflict() // 版本冲突报错模式
+        eachDependency {
+            if (requested.group == "com.github.bumptech.glide" && requested.name == "glide") {
+                println("---Gradle：Projec configurations Project找到依赖，版本是 = " + requested.version)
+            }
+        }
+    }
 }
-project.property("isTest")
+//if (hasProperty("isTest")){
+//    println("---hasProperty isTest yes")
+//}else {
+//    println("---hasProperty isTest no")
+//}
+//project.property("isTest")
