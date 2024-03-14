@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.resolve.calls.inference.TypeVariable
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -79,3 +81,50 @@ configurations.all {
 //    println("---hasProperty isTest no")
 //}
 //project.property("isTest")
+
+
+//tasks.register("yechaoa", YechaoaTask) {
+//    taskName = "我是传入的Task Name "
+//}
+
+class YechaoaTask : DefaultTask() {
+
+    @Internal
+    var taskName = "default"
+
+    @TaskAction
+    fun MyAction1() {
+        println("$taskName -- MyAction1")
+    }
+
+    @TaskAction
+    fun MyAction2() {
+        println("$taskName -- MyAction2")
+    }
+}
+
+tasks.register("yechaoa") {
+    println("Task Name = $name")
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
