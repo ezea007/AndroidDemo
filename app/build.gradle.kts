@@ -2,7 +2,6 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
-    id("com.example.plugin")
 }
 
 android {
@@ -41,9 +40,9 @@ android {
 }
 
 // 插件化开发，判断是否展示和隐藏
-printDependencies {
-    enable = false
-}
+//printDependencies {
+//    enable = false
+//}
 
 dependencies {
 

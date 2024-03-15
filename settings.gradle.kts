@@ -1,7 +1,5 @@
 pluginManagement {
     repositories {
-//        maven { setUrl("./custom_plugin_repo") }
-        maven { setUrl("./plugin/build/maven-repo") }
         maven { setUrl("https://maven.aliyun.com/repository/public") }
         maven { setUrl("https://maven.aliyun.com/repository/public") }
         maven { setUrl("https://maven.aliyun.com/repository/google") }
