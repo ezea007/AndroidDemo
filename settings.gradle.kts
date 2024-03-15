@@ -1,5 +1,8 @@
 pluginManagement {
     repositories {
+//        maven { setUrl("./custom_plugin_repo") }
+        maven { setUrl("./plugin/build/maven-repo") }
+        maven { setUrl("https://maven.aliyun.com/repository/public") }
         maven { setUrl("https://maven.aliyun.com/repository/public") }
         maven { setUrl("https://maven.aliyun.com/repository/google") }
         maven { setUrl("https://maven.aliyun.com/repository/gradle-plugin") }
@@ -40,4 +43,4 @@ gradle.allprojects {
 gradle.projectsEvaluated {
     println("---Gradle：projectsEvaluated 所有Project对象评估完毕")
 }
-
+include(":plugin")

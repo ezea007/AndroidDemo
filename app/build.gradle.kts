@@ -1,9 +1,8 @@
-import org.jetbrains.kotlin.resolve.calls.inference.TypeVariable
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id("com.example.plugin")
 }
 
 android {
@@ -39,6 +38,11 @@ android {
     dataBinding {
         enable = true
     }
+}
+
+// 插件化开发，判断是否展示和隐藏
+printDependencies {
+    enable = false
 }
 
 dependencies {
@@ -106,8 +110,6 @@ class YechaoaTask : DefaultTask() {
 tasks.register("yechaoa") {
     println("Task Name = $name")
 }
-
-
 
 
 
