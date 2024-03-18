@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id("com.example.plugin")
 }
 
 android {
@@ -31,18 +32,18 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+//    kotlinOptions {
+//        jvmTarget = "1.8"
+//    }
     dataBinding {
         enable = true
     }
 }
 
 // 插件化开发，判断是否展示和隐藏
-//printDependencies {
-//    enable = false
-//}
+printDependencies {
+    enable = true
+}
 
 dependencies {
 
@@ -60,6 +61,7 @@ dependencies {
     // navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.6.0")
     implementation("androidx.navigation:navigation-ui-ktx:2.6.0")
+//    implementation("com.github.ezea007:AndroidDemo:1.0.3")
 }
 
 project.beforeEvaluate {
