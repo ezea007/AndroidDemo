@@ -1,3 +1,7 @@
+import java.util.Enumeration
+import java.util.jar.JarEntry
+import java.util.jar.JarFile
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -17,15 +21,24 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters.add("armeabi-v7a")
+            abiFilters.add("arm64-v8a")
+        }
     }
 
     buildTypes {
+        debug {
+            versionNameSuffix = "-测试包"
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            versionNameSuffix = "-正式包" // 设置对应的版本名称后缀
         }
     }
     compileOptions {
@@ -40,9 +53,10 @@ android {
     }
 }
 
+
 // 插件化开发，判断是否展示和隐藏
 printDependencies {
-    enable = true
+    enable = false
 }
 
 dependencies {
@@ -61,7 +75,9 @@ dependencies {
     // navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.6.0")
     implementation("androidx.navigation:navigation-ui-ktx:2.6.0")
-//    implementation("com.github.ezea007:AndroidDemo:1.0.3")
+    //8.全功能：直播推流（含超低延时直播、RTC连麦）＋短视频＋播放器＋美颜特效
+    implementation("com.aliyun.aio:AliVCSDK_Premium:6.4.0")
+
 }
 
 project.beforeEvaluate {
@@ -69,7 +85,29 @@ project.beforeEvaluate {
 }
 project.afterEvaluate {
     println("---project：afterEvaluate Project评估完毕，对象是 = " + project.name)
+    // 动态修改版本
+    android.applicationVariants.configureEach {
+        println(buildType.name)
+        println(versionName)
+        println(versionCode)
+
+        // 获取 SO 库
+        configurations.getByName(name + "CompileClasspath").forEach {
+            println("App fine name = " + it.name)
+            if (it.name.endsWith(".jar") || it.name.endsWith(".aar")) {
+                val enums: Enumeration<*> = JarFile(it).entries()
+                while (enums.hasMoreElements()) {
+                    val jarEntry: JarEntry = enums.nextElement() as JarEntry
+                    if (jarEntry.getName().endsWith(".so")) {
+                        println("App ----- so name = " + jarEntry.getName())
+                    }
+                }
+            }
+        }
+    }
 }
+
+// 依赖版本
 configurations.all {
     resolutionStrategy {
 //        failOnVersionConflict() // 版本冲突报错模式
@@ -80,6 +118,7 @@ configurations.all {
         }
     }
 }
+
 //if (hasProperty("isTest")){
 //    println("---hasProperty isTest yes")
 //}else {
